@@ -224,7 +224,8 @@ export const S11TheModel: React.FC = () => {
   const lift = lerp(0, HANDOFF_Y - MERGED_Y, prog(frame, C.end + 8, 20));
 
   // beat 0: hub ring dims, blueprint grid fades in
-  const hubOp = (1 - 0.72 * prog(frame, C.model, 20)) * (1 - prog(frame, C.first - 4, 16));
+  // (fades in from the background left by Scene 10's Part 4 sting)
+  const hubOp = prog(frame, 0, 12) * (1 - 0.72 * prog(frame, C.model, 20)) * (1 - prog(frame, C.first - 4, 16));
   const gridA = prog(frame, C.model, 25) * (1 - prog(frame, C.second - 10, 14));
   const gridB = prog(frame, C.many + 20, 25) * extras;
   const gridOp = 0.9 * Math.max(gridA, gridB);

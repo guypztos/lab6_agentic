@@ -488,6 +488,8 @@ export const S18CollapseAndBackoff: React.FC = () => {
   const { gx, sy } = sgCoords({ ...box, gMax: 3, sMax: 0.4 });
   const G = ballG(frame);
   const S = slottedS(G);
+  // hand-off from Scene 17: its peak markers fade out before the ball arrives
+  const peaksOut = 1 - prog(frame, 0, 12);
 
   // counters → G / S pills
   const m = prog(frame, T.spiral + 2, 28);
@@ -504,7 +506,14 @@ export const S18CollapseAndBackoff: React.FC = () => {
       {/* the plot (opens and closes the scene) */}
       <Stage opacity={plotOp * (1 - prog(frame, STING + 8, 4))}>
         {/* no peak label here: the ball lives right next to the peak and would sit on top of it */}
-        <SGPlot {...box} pure={1} slotted={1} ball={{ G, curve: "slotted" }} />
+        <SGPlot
+          {...box}
+          pure={1}
+          slotted={1}
+          purePeak={peaksOut}
+          slottedPeak={peaksOut}
+          ball={{ G, curve: "slotted", opacity: prog(frame, 8, 12) }}
+        />
         {guides > 0 ? (
           <g opacity={guides} stroke={COLORS.muted} strokeWidth={2} strokeDasharray="5 6">
             <line x1={gx(G)} y1={sy(S) - 16} x2={gx(G)} y2={axisY} />

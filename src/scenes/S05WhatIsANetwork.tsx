@@ -24,6 +24,7 @@ import {
   Phone,
   pop,
   prog,
+  sceneDurationInFrames,
   SceneFrame,
   Stage,
   STREET,
@@ -31,9 +32,10 @@ import {
   timeScale,
   Title,
 } from "../shared";
+import { OpeningRipples } from "./S06Collisions";
 
 /** Extra seconds of picture after the narration tail. The scene length updates automatically. */
-export const meta = { extraTail: 0.5 };
+export const meta = { extraTail: 0.9 };
 
 const ID = "s05";
 const STING = 54;
@@ -157,7 +159,8 @@ export const S05WhatIsANetwork: React.FC = () => {
   const dim = 0.55 * prog(frame, cNetwork, 16);
   const zoom = prog(frame, cLike, 26);
   const streetOut = 1 - prog(frame, cLike + 10, 16);
-  const pocket = fade(frame, STING - 12, 14, cLike, 12);
+  // docked pocket from frame 0 (exactly as Scene 04 leaves it): the Part 2 sting fades in over it
+  const pocket = 1 - prog(frame, cLike, 12);
   const netLabel = fade(frame, cNetwork + 6, 12, cLike, 10);
 
   // ── phone close-up (sentence 2–3)
@@ -186,6 +189,13 @@ export const S05WhatIsANetwork: React.FC = () => {
   // ── split: wire / radio (sentence 6)
   const split = prog(frame, cPulses - 4, 24);
   const radioIn = prog(frame, cRadio - 8, 18);
+
+  // ── hand-off to Scene 06: wire, titles and phone fade; the radio glides to centre frame and its arcs become
+  // Scene 06's full rings (drawn by Scene 06's own component, phase-continuous with its frame 0).
+  const END = sceneDurationInFrames(ID, meta.extraTail);
+  const outro = prog(frame, END - 26, 24);
+  const glide = EASE(outro);
+  const keep = 1 - outro;
   const scroll = Math.max(0, frame - (cPulses + 16)) * 4;
 
   // packet label position: above the chunks, then above the bars
@@ -441,13 +451,13 @@ export const S05WhatIsANetwork: React.FC = () => {
             </clipPath>
           </defs>
           {split > 0 ? (
-            <g opacity={split}>
+            <g opacity={split * keep}>
               <line x1={640} y1={190} x2={640} y2={640} stroke={COLORS.faint} strokeWidth={2} />
               <line x1={60} y1={482} x2={600} y2={482} stroke={COPPER} strokeWidth={14} strokeLinecap="round" />
               <line x1={60} y1={478} x2={600} y2={478} stroke="#f0b27a" strokeWidth={3} strokeLinecap="round" opacity={0.7} />
             </g>
           ) : null}
-          <g clipPath="url(#s05-wave-clip)">
+          <g clipPath="url(#s05-wave-clip)" opacity={keep}>
             <path
               d={squarePath(BITS, waveX0 + shift - period, bitW, yHi, yLo, split > 0 ? 3 : 1).replace(/^/, "")}
               pathLength={split > 0 ? undefined : 1}
@@ -462,7 +472,7 @@ export const S05WhatIsANetwork: React.FC = () => {
             />
           </g>
           {radioIn > 0 ? (
-            <g opacity={radioIn}>
+            <g opacity={radioIn * keep} transform={`translate(${(640 - 960) * glide} ${(360 - RADIO_Y) * glide})`}>
               <Phone x={960} y={500} scale={0.55} message="" typed={0} frame={frame} />
               {[0, 1, 2, 3, 4].map((k) => {
                 const u = ((frame - cRadio) / 40 + k / 5 + 10) % 1;
@@ -481,19 +491,27 @@ export const S05WhatIsANetwork: React.FC = () => {
               })}
             </g>
           ) : null}
+          {outro > 0 ? (
+            <OpeningRipples
+              frame={frame - END}
+              cx={lerp(960, 640, glide)}
+              cy={lerp(RADIO_Y, 360, glide)}
+              opacity={outro}
+            />
+          ) : null}
         </Stage>
       ) : null}
       {signalLabel > 0 ? (
-        <Title x={640} y={lerp(560, 120, EASE(split))} size={lerp(56, 48, split)} opacity={signalLabel} color={COLORS.ink}>
+        <Title x={640} y={lerp(560, 120, EASE(split))} size={lerp(56, 48, split)} opacity={signalLabel * keep} color={COLORS.ink}>
           signal
         </Title>
       ) : null}
       {split > 0 ? (
         <>
-          <Label x={330} y={560} size={28} color={COLORS.muted} opacity={fade(frame, cPulses + 10, 12)}>
+          <Label x={330} y={560} size={28} color={COLORS.muted} opacity={fade(frame, cPulses + 10, 12) * keep}>
             pulses in a wire
           </Label>
-          <Label x={960} y={680} size={28} color={COLORS.muted} opacity={fade(frame, cRadio + 4, 12)}>
+          <Label x={960} y={680} size={28} color={COLORS.muted} opacity={fade(frame, cRadio + 4, 12) * keep}>
             radio waves
           </Label>
         </>

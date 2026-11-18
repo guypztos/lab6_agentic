@@ -5,7 +5,7 @@
 // real-life panel at the top left, and the three rule chips build up below it. The two halves run in sync:
 // "Copy that" lands with the ✓ ACK, static on the left lands with the red collision on the right.
 import React from "react";
-import { useCurrentFrame } from "remotion";
+import { AbsoluteFill, useCurrentFrame } from "remotion";
 import {
   COLORS,
   Die,
@@ -26,6 +26,7 @@ import {
   lerp,
   pop,
   prog,
+  sceneDurationInFrames,
 } from "../shared";
 
 /** Extra seconds of picture after the narration tail. The scene length updates automatically. */
@@ -230,6 +231,9 @@ const Pulse: React.FC<{ x: number; y: number; k: number; color: string; big?: bo
 export const S09TheRules: React.FC = () => {
   const frame = useCurrentFrame();
 
+  // Hand-off: in the last half second everything but Rule 3's chip steps aside (Scene 10 opens on that chip).
+  const rest = 1 - prog(frame, sceneDurationInFrames("s09", meta.extraTail) - 18, 14);
+
   // Ring: open on Scene 08's ring, then ease right to make room.
   const mv = prog(frame, MOVE.start, MOVE.dur);
   const cx = lerp(RING0.cx, RING1.cx, mv);
@@ -319,6 +323,7 @@ export const S09TheRules: React.FC = () => {
 
   return (
     <SceneFrame id="s09">
+      <AbsoluteFill style={{ opacity: rest }}>
       {/* left: real-life panel */}
       <Stage opacity={leftIn}>
         <rect x={PANEL.x} y={PANEL.y} width={PANEL.w} height={PANEL.h} rx={18} fill={COLORS.panel} />
@@ -420,6 +425,7 @@ export const S09TheRules: React.FC = () => {
       <RuleChip n={2} x={CHIP_X} y={CHIP_Y[1]} start={C.r2} color={COLORS.success} opacity={chipOp(1)}>
         Hub replies with an ACK <span style={{ color: COLORS.muted, fontSize: 22 }}>(acknowledgment)</span>
       </RuleChip>
+      </AbsoluteFill>
       <RuleChip n={3} x={CHIP_X} y={CHIP_Y[2]} start={C.r3} color={COLORS.retry} opacity={chipOp(2)}>
         No ACK? → wait a random time → resend
       </RuleChip>

@@ -49,6 +49,60 @@ const WA = walkie(A_X, 1);
 const WB = walkie(B_X, -1);
 const WS = walkie(SUP_X, 1);
 
+/**
+ * The opening radio ripples, centred on the channel band. `frame` is Scene 06's frame (negative values continue
+ * the cycle backwards), so Scene 05's ending can draw the very same rings and hand off without a jump.
+ */
+/**
+ * Scene 06's final picture, frozen: the red-flashed channel band with the two shattered packets, both ✗ marks,
+ * the label and the COLLISION stamp. Scene 07 opens on this and fades it out (the hand-off).
+ */
+export const S06Closing: React.FC<{ opacity?: number }> = ({ opacity = 1 }) => (
+  <>
+    <Stage opacity={opacity}>
+      <ChannelBand y={BAND_Y} h={120} glow={1} color={COLORS.event} />
+      <PacketBar scale={SC} start={BAR_A.start} y={BAR_A.y - 20} h={BAR_H} state="attempt" toState="collision" mix={1} shatter={0.2} seed="s06-shA" />
+      <PacketBar scale={SC} start={BAR_B.start} y={BAR_B.y + 20} h={BAR_H} state="attempt" toState="collision" mix={1} shatter={0.2} seed="s06-shB" />
+      <Mark x={SC(BAR_A.start + 0.5)} y={BAR_A.y - 20 - 70} kind="cross" size={56} progress={1} />
+      <Mark x={SC(BAR_B.start + 0.5)} y={BAR_B.y + 20 + 70} kind="cross" size={56} progress={1} />
+    </Stage>
+    <Label x={120} y={BAND_Y - 84} anchor="left" size={28} color={COLORS.muted} opacity={opacity}>
+      shared channel
+    </Label>
+    <Stamp x={640} y={170} size={56} opacity={opacity}>
+      COLLISION
+    </Stamp>
+  </>
+);
+
+export const OpeningRipples: React.FC<{ frame: number; flatten?: number; cx?: number; cy?: number; opacity?: number }> = ({
+  frame,
+  flatten = 0,
+  cx = 640,
+  cy = BAND_Y,
+  opacity = 1,
+}) => (
+  <g opacity={opacity}>
+    {[0, 1, 2, 3, 4].map((k) => {
+      const u = ((frame / 34 + k / 5) % 1 + 1) % 1;
+      const r = 40 + u * 520;
+      return (
+        <ellipse
+          key={k}
+          cx={cx}
+          cy={cy}
+          rx={r}
+          ry={r * lerp(1, 0.04, EASE(flatten))}
+          fill="none"
+          stroke={COLORS.event}
+          strokeWidth={4}
+          opacity={(1 - u) * clamp01(u * 6) * (1 - flatten)}
+        />
+      );
+    })}
+  </g>
+);
+
 // Devices hanging off the shared channel in the opening beat.
 const DEVICES = [
   { x: 230, up: true },
@@ -234,23 +288,7 @@ export const S06Collisions: React.FC = () => {
       {/* ── opening: ripples → channel band, devices on it */}
       {openOut > 0 ? (
         <Stage opacity={openOut}>
-          {[0, 1, 2, 3, 4].map((k) => {
-            const u = ((frame / 34 + k / 5) % 1 + 1) % 1;
-            const r = 40 + u * 520;
-            return (
-              <ellipse
-                key={k}
-                cx={640}
-                cy={BAND_Y}
-                rx={r}
-                ry={r * lerp(1, 0.04, EASE(flatten))}
-                fill="none"
-                stroke={COLORS.event}
-                strokeWidth={4}
-                opacity={(1 - u) * clamp01(u * 6) * (1 - flatten)}
-              />
-            );
-          })}
+          <OpeningRipples frame={frame} flatten={flatten} />
           <ChannelBand y={BAND_Y} h={64} progress={1} opacity={bandOpen} glow={1} />
           {DEVICES.map((d, i) => {
             const p = pop(frame, cMany + 6 + i * 5);

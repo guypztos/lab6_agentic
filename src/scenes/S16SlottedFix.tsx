@@ -21,6 +21,7 @@ import {
   timeScale,
   cue,
   prog,
+  sceneDurationInFrames,
   fade,
   pop,
   lerp,
@@ -149,6 +150,8 @@ export const S16SlottedFix: React.FC = () => {
   const plotOut = 1 - prog(frame, 0, 24);
   const clockIn = pop(frame, C.roberts + 24);
   const toCorner = prog(frame, C.split - 4, 30);
+  // the corner badge (clock + Roberts label) leaves during the tail, so Scene 17 opens on the slotted timeline alone
+  const badgeOut = 1 - prog(frame, sceneDurationInFrames("s16", meta.extraTail) - 18, 14);
   const tick = clamp01((frame - C.clock) / 26);
 
   const aIn = fade(frame, C.split, 12) * (1 - prog(frame, C.room - 10, 14));
@@ -186,7 +189,7 @@ export const S16SlottedFix: React.FC = () => {
 
         {/* the clock */}
         <Stage>
-          <Clock x={clockX} y={clockY} scale={clockS} frame={frame} ring={tick} opacity={Math.min(1, clockIn * 1.4)} />
+          <Clock x={clockX} y={clockY} scale={clockS} frame={frame} ring={tick} opacity={Math.min(1, clockIn * 1.4) * badgeOut} />
         </Stage>
         <div
           style={{
@@ -199,7 +202,7 @@ export const S16SlottedFix: React.FC = () => {
             fontSize: lerp(36, 26, toCorner),
             color: COLORS.ink,
             whiteSpace: "nowrap",
-            opacity: fade(frame, C.roberts + 6, 14),
+            opacity: fade(frame, C.roberts + 6, 14) * badgeOut,
           }}
         >
           <span style={{ color: COLORS.slotted, fontWeight: 700 }}>Slotted Aloha</span> · L. Roberts, 1972

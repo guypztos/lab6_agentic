@@ -36,6 +36,7 @@ import {
   W,
   H,
 } from "../shared";
+import { S03Closing } from "./S03WhyEverywhere";
 
 /** Extra seconds of picture after the narration tail. The scene length updates automatically. */
 export const meta = { extraTail: 0.4 };
@@ -214,6 +215,9 @@ export const S04OneFormula: React.FC = () => {
 
   return (
     <SceneFrame id={ID}>
+      {/* hand-off: Scene 03's closing comparison fades out as the formula card arrives */}
+      {frame < cKeep + 16 ? <S03Closing opacity={1 - prog(frame, 0, cKeep + 14)} /> : null}
+
       {/* sliding-window timeline */}
       {winIn > 0 ? (
         <>

@@ -17,7 +17,6 @@ import {
   FONT,
   lerp,
   narrationEndFrame,
-  PacketBar,
   PartSting,
   Person,
   SceneFrame,
@@ -26,11 +25,11 @@ import {
   sceneDurationInFrames,
   Stage,
   STREET,
-  timeScale,
   Title,
   useSvgId,
   type Pose,
 } from "../shared";
+import { S06Closing } from "./S06Collisions";
 
 /** Extra seconds of picture after the narration tail. The scene length updates automatically. */
 export const meta = { extraTail: 2.2 };
@@ -126,9 +125,9 @@ const ChannelRing: React.FC<{ progress: number; opacity: number }> = ({ progress
 export const S07TheQuestion: React.FC = () => {
   const frame = useCurrentFrame();
 
-  // Opening: Scene 06's shattered bars finish fading out over the incoming street.
-  const sc = timeScale(0, 10, 140, 1140);
-  const shatterOut = 0.55 + 0.45 * prog(frame, 0, 16);
+  // Once the Part 3 sting is fully opaque, the scene underneath is retired, so the sting fades out onto the
+  // plain background (not back onto the question) and Scene 08 fades in from there.
+  const live = frame < STING_AT + 10;
   const streetIn = fade(frame, Math.max(0, T_OPEN - 8), 18);
 
   // Street + people → ring.
@@ -148,6 +147,8 @@ export const S07TheQuestion: React.FC = () => {
 
   return (
     <SceneFrame id="s07">
+      {live ? (
+      <>
       {/* Real-life layer: the crowded stop */}
       <Stage opacity={streetIn * (1 - streetOut)}>
         <BusStopStreet>
@@ -171,13 +172,8 @@ export const S07TheQuestion: React.FC = () => {
         </BusStopStreet>
       </Stage>
 
-      {/* Scene 06 handoff: the last fragments of the collided bars */}
-      {frame < 18 ? (
-        <Stage opacity={1 - prog(frame, 0, 16)}>
-          <PacketBar scale={sc} start={4.2} y={300} state="collision" shatter={shatterOut} seed="s06a" />
-          <PacketBar scale={sc} start={4.8} y={345} state="collision" shatter={shatterOut} seed="s06b" />
-        </Stage>
-      ) : null}
+      {/* Scene 06 handoff: its closing picture (shattered bars on the channel band) fades out */}
+      {frame < 18 ? <S06Closing opacity={1 - prog(frame, 0, 16)} /> : null}
 
       {/* Theory layer: the shared channel, the device ring, the missing controller */}
       <Stage>
@@ -291,6 +287,8 @@ export const S07TheQuestion: React.FC = () => {
       </Title>
 
       {/* Bridge into Scene 08 */}
+      </>
+      ) : null}
       <Sequence from={STING_AT} durationInFrames={STING_LEN} name="Part 3 sting">
         <PartSting part={3} title="Aloha: the idea" durationInFrames={STING_LEN} />
       </Sequence>

@@ -115,6 +115,51 @@ export const S01_HANDOFF = {
   dotsX: laneDotXs(1, sceneDurationInFrames(ID, meta.extraTail) - 1),
 };
 
+/**
+ * The stacked lanes exactly as they sit on this scene's last frame (line, arrow, icon and dots). Scene 02 keeps
+ * the 🚌 lane and fades out the rest with this: `lanes` are drawn whole, `iconOnly` lanes just their icon.
+ */
+export const S01FinalLanes: React.FC<{ lanes: number[]; iconOnly?: number[]; opacity?: number }> = ({
+  lanes,
+  iconOnly = [],
+  opacity = 1,
+}) => {
+  const f = sceneDurationInFrames(ID, meta.extraTail) - 1;
+  const t = tau(f);
+  const now = xNow(f);
+  const icon = (i: number) => (
+    <text key={`icon-${i}`} x={X0 - 34} y={LANE_Y_STACK[i] + 9} fontSize={26} textAnchor="middle" fontFamily={FONT.sans}>
+      {ICONS[i]}
+    </text>
+  );
+  return (
+    <Stage opacity={opacity}>
+      {lanes.map((i) => {
+        const y = LANE_Y_STACK[i];
+        return (
+          <g key={`lane-${i}`}>
+            <line x1={X0} y1={y} x2={X1} y2={y} stroke={COLORS.muted} strokeWidth={2.5} strokeLinecap="round" />
+            <path d={`M ${X1 + 2} ${y} l -12 -7 v 14 z`} fill={COLORS.muted} />
+            {icon(i)}
+            {LANE_TIMES[i].map((te, j) => {
+              if (te > t) return null;
+              const x = now - (t - te) * PX;
+              if (x < X0 - 4) return null;
+              const fresh = clamp01((now - x) / 26);
+              const over = fresh < 1 ? 1 + 0.35 * Math.sin(fresh * Math.PI) : 1;
+              const keyed = j === 0;
+              const r = 8 * (keyed ? 1 : Math.min(1, fresh * 2) * over);
+              const dy = keyed ? 0 : -16 * (1 - fresh);
+              return <circle key={`d-${j}`} cx={x} cy={y + dy} r={r} fill={COLORS.event} />;
+            })}
+          </g>
+        );
+      })}
+      {iconOnly.map(icon)}
+    </Stage>
+  );
+};
+
 export const S01ColdOpen: React.FC = () => {
   const frame = useCurrentFrame();
   const clipId = useSvgId("s01card");

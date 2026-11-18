@@ -480,7 +480,8 @@ const HelloBurst: React.FC<{ frame: number }> = ({ frame }) => {
 export const S19Legacy: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const globeOp = 1 - prog(frame, T.metcalfe + 8, 10);
+  // fades in from the background left by Scene 18's Part 8 sting
+  const globeOp = prog(frame, 0, 12) * (1 - prog(frame, T.metcalfe + 8, 10));
   const tilesOut = T.remember - 14;
   const streetOp = prog(frame, T.remember - 12, 14);
   const montageOut = T.end - 6;

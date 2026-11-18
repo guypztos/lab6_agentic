@@ -251,11 +251,12 @@ export const S15TheCurve: React.FC = () => {
             transform: `translate(-50%, -50%) scale(${lerp(1, 0.38, card)})`,
             opacity: out,
             background: COLORS.panel,
-            border: `3px solid ${COLORS.event}`,
+            // frame 0 matches Scene 14's box exactly (4px border, 26px padding, blue glow), then eases into this card
+            border: `${lerp(4, 3, card)}px solid ${COLORS.event}`,
             borderRadius: 18,
-            padding: "18px 56px 22px",
+            padding: `${lerp(26, 18, card)}px 56px ${lerp(26, 22, card)}px`,
             textAlign: "center",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
+            boxShadow: `0 ${lerp(12, 10, card)}px ${lerp(40, 30, card)}px rgba(0,0,0,${lerp(0.4, 0.35, card)}), 0 0 40px rgba(56, 189, 248, ${0.25 * (1 - card)})`,
             whiteSpace: "nowrap",
           }}
         >

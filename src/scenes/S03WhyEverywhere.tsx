@@ -268,6 +268,39 @@ const TILES = [
   { text: "Geiger counter", seed: "s03-tile-geiger" },
 ];
 
+// ── the closing picture, frozen: Poisson timeline (✓) above the schedule (✗) ────────────────────────────────
+// Same geometry as the scene's final frame (w = 1). Scene 04 opens on this and fades it out (the hand-off).
+const END_X0 = 170;
+const END_X1 = 1110;
+const END_PY = 300;
+const END_TY = 470;
+
+export const S03Closing: React.FC<{ opacity?: number }> = ({ opacity = 1 }) => {
+  const pScale = timeScale(0, T_END + 1.2, END_X0, END_X1);
+  const tScale = timeScale(0, 12, END_X0, END_X1);
+  return (
+    <>
+      <Stage opacity={opacity}>
+        <Timeline scale={pScale} y={END_PY} />
+        <EventDots scale={pScale} y={END_PY} times={ARRIVALS} r={6} />
+        <StopGlyph x={END_X0 - 26} y={END_PY - 4} s={1.1} />
+        <Timeline scale={tScale} y={END_TY} />
+        <EventDots scale={tScale} y={END_TY} times={scheduledArrivals(1, 0, 12, 0.5)} color={COLORS.ink} />
+        <TrainGlyph x={END_X0 - 26} y={END_TY - 2} />
+        <Mark x={END_X1 + 40} y={END_PY} kind="check" size={48} progress={1} />
+        <Mark x={END_X1 + 40} y={END_TY} kind="cross" size={48} progress={1} />
+      </Stage>
+      <Label x={END_X0} y={END_PY - 44} anchor="left" size={30} weight={600} opacity={opacity}>
+        <span style={{ color: COLORS.success, fontWeight: 800 }}>✓</span> people arriving at a stop
+      </Label>
+      <Caption y={640} opacity={opacity}>
+        <span style={{ color: COLORS.collision, fontWeight: 800 }}>✗</span>{" "}
+        <span style={{ fontWeight: 700 }}>schedule ≠ Poisson</span>
+      </Caption>
+    </>
+  );
+};
+
 export const S03WhyEverywhere: React.FC = () => {
   const frame = useCurrentFrame();
 

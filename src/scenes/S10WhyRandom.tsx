@@ -376,6 +376,10 @@ export const S10WhyRandom: React.FC = () => {
 
   return (
     <SceneFrame id={ID}>
+      {/* Once the Part 4 sting is fully opaque the scene underneath is retired, so the sting fades out to the
+          plain background (not back onto the hallway) and Scene 11 fades in from there. */}
+      {frame < STING_AT + 10 ? (
+      <>
       {/* opening chip */}
       <RuleChip n={3} x={40} y={560} color={COLORS.retry} opacity={chipOut}>
         No ACK? → wait a{" "}
@@ -432,6 +436,8 @@ export const S10WhyRandom: React.FC = () => {
       <Label x={RT.x1} y={420} anchor="right" size={SIZE.caption} weight={800} color={COLORS.success} opacity={rightShow * fade(frame, B_OK + 6, 10)}>
         ✓ ✓
       </Label>
+      </>
+      ) : null}
 
       {/* hand-off to Part 4 */}
       <Sequence from={STING_AT} durationInFrames={STING} layout="none" name="Part 4 sting">

@@ -38,7 +38,7 @@ import {
   useSvgId,
   W,
 } from "../shared";
-import { S01_HANDOFF } from "./S01ColdOpen";
+import { S01_HANDOFF, S01FinalLanes } from "./S01ColdOpen";
 
 /** Extra seconds of picture after the narration tail. The scene length updates automatically. */
 export const meta = { extraTail: 2.3 };
@@ -289,6 +289,13 @@ export const S02ThreeRules: React.FC = () => {
 
   return (
     <SceneFrame id={ID}>
+      {/* hand-off: Scene 01's 📱 and 💧 lanes (and the 🚌 icon) fade out; the 🚌 lane itself carries on below */}
+      {frame < 20 ? (
+        <>
+          <S01FinalLanes lanes={[0, 2]} opacity={1 - prog(frame, 0, 18)} />
+          <S01FinalLanes lanes={[]} iconOnly={[1]} opacity={1 - prog(frame, 0, 8)} />
+        </>
+      ) : null}
       {/* ---------- real-life layer: the bus stop as a medium shot, cropped into a card */}
       <Stage opacity={streetA}>
         <defs>
