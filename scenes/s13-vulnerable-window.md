@@ -1,6 +1,6 @@
 # Scene 13 — The vulnerable window
 
-**Part 5 · Pure Aloha** · **Audio:** 24.2 s · **Starts at:** 4:25 · **Composition:** `S13VulnerableWindow` · **Audio file:** `build/narration/s13.wav`
+**Part 5 · Pure Aloha** · **Audio:** 23.0 s · **Starts at:** 4:11 · **Composition:** `S13VulnerableWindow` · **Audio file:** `build/narration/s13.wav`
 
 ## Narration
 

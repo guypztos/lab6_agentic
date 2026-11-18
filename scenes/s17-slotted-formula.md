@@ -1,6 +1,6 @@
 # Scene 17 — Double the capacity
 
-**Part 6 · Slotted Aloha** · **Audio:** 27.4 s · **Starts at:** 6:13 · **Composition:** `S17SlottedFormula` · **Audio file:** `build/narration/s17.wav`
+**Part 6 · Slotted Aloha** · **Audio:** 25.5 s · **Starts at:** 5:54 · **Composition:** `S17SlottedFormula` · **Audio file:** `build/narration/s17.wav`
 
 ## Narration
 

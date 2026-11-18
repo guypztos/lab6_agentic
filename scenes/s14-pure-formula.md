@@ -1,6 +1,6 @@
 # Scene 14 — Applying the formula
 
-**Part 5 · Pure Aloha** · **Audio:** 27.4 s · **Starts at:** 4:50 · **Composition:** `S14PureFormula` · **Audio file:** `build/narration/s14.wav`
+**Part 5 · Pure Aloha** · **Audio:** 25.5 s · **Starts at:** 4:34 · **Composition:** `S14PureFormula` · **Audio file:** `build/narration/s14.wav`
 
 ## Narration
 

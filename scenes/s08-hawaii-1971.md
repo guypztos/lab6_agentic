@@ -1,6 +1,6 @@
 # Scene 08 — Hawaii, 1971
 
-**Part 3 · Aloha: the idea** · **Audio:** 24.5 s · **Starts at:** 2:08 · **Composition:** `S08Hawaii1971` · **Audio file:** `build/narration/s08.wav`
+**Part 3 · Aloha: the idea** · **Audio:** 22.9 s · **Starts at:** 2:01 · **Composition:** `S08Hawaii1971` · **Audio file:** `build/narration/s08.wav`
 
 ## Narration
 

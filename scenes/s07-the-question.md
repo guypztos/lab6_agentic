@@ -1,6 +1,6 @@
 # Scene 07 — The question
 
-**Part 2 · Networks from zero** · **Audio:** 9.5 s · **Starts at:** 1:58 · **Composition:** `S07TheQuestion` · **Audio file:** `build/narration/s07.wav`
+**Part 2 · Networks from zero** · **Audio:** 8.8 s · **Starts at:** 1:51 · **Composition:** `S07TheQuestion` · **Audio file:** `build/narration/s07.wav`
 
 ## Narration
 

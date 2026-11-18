@@ -1,6 +1,6 @@
 # Scene 06 — Sharing a channel, and collisions
 
-**Part 2 · Networks from zero** · **Audio:** 25.0 s · **Starts at:** 1:32 · **Composition:** `S06Collisions` · **Audio file:** `build/narration/s06.wav`
+**Part 2 · Networks from zero** · **Audio:** 24.4 s · **Starts at:** 1:26 · **Composition:** `S06Collisions` · **Audio file:** `build/narration/s06.wav`
 
 ## Narration
 

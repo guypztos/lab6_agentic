@@ -1,6 +1,6 @@
 # Scene 03 — Why it's everywhere
 
-**Part 1 · The Poisson process** · **Audio:** 14.0 s · **Starts at:** 0:31 · **Composition:** `S03WhyEverywhere` · **Audio file:** `build/narration/s03.wav`
+**Part 1 · The Poisson process** · **Audio:** 13.1 s · **Starts at:** 0:28 · **Composition:** `S03WhyEverywhere` · **Audio file:** `build/narration/s03.wav`
 
 ## Narration
 

@@ -1,6 +1,6 @@
 # Scene 11 — Turning it into math
 
-**Part 4 · Building the model** · **Audio:** 32.0 s · **Starts at:** 3:23 · **Composition:** `S11TheModel` · **Audio file:** `build/narration/s11.wav`
+**Part 4 · Building the model** · **Audio:** 30.3 s · **Starts at:** 3:13 · **Composition:** `S11TheModel` · **Audio file:** `build/narration/s11.wav`
 
 ## Narration
 

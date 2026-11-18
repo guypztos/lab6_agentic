@@ -1,6 +1,6 @@
 # Scene 04 — The one formula
 
-**Part 1 · The Poisson process** · **Audio:** 14.2 s · **Starts at:** 0:46 · **Composition:** `S04OneFormula` · **Audio file:** `build/narration/s04.wav`
+**Part 1 · The Poisson process** · **Audio:** 13.6 s · **Starts at:** 0:42 · **Composition:** `S04OneFormula` · **Audio file:** `build/narration/s04.wav`
 
 ## Narration
 

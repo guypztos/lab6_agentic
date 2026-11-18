@@ -1,6 +1,6 @@
 # Scene 15 — The curve
 
-**Part 5 · Pure Aloha** · **Audio:** 29.5 s · **Starts at:** 5:18 · **Composition:** `S15TheCurve` · **Audio file:** `build/narration/s15.wav`
+**Part 5 · Pure Aloha** · **Audio:** 28.0 s · **Starts at:** 5:01 · **Composition:** `S15TheCurve` · **Audio file:** `build/narration/s15.wav`
 
 ## Narration
 

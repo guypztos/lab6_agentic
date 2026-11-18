@@ -1,6 +1,6 @@
 # Scene 12 — Two numbers: G and S
 
-**Part 4 · Building the model** · **Audio:** 28.0 s · **Starts at:** 3:56 · **Composition:** `S12GAndS` · **Audio file:** `build/narration/s12.wav`
+**Part 4 · Building the model** · **Audio:** 25.7 s · **Starts at:** 3:44 · **Composition:** `S12GAndS` · **Audio file:** `build/narration/s12.wav`
 
 ## Narration
 

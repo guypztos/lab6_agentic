@@ -1,6 +1,6 @@
 # Scene 09 — The rules
 
-**Part 3 · Aloha: the idea** · **Audio:** 28.2 s · **Starts at:** 2:34 · **Composition:** `S09TheRules` · **Audio file:** `build/narration/s09.wav`
+**Part 3 · Aloha: the idea** · **Audio:** 27.1 s · **Starts at:** 2:25 · **Composition:** `S09TheRules` · **Audio file:** `build/narration/s09.wav`
 
 ## Narration
 

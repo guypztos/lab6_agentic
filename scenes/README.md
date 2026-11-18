@@ -16,50 +16,51 @@ turns out, has been doing Aloha all along (Scene 19). The bus finally arrives at
 
 ## Scene index
 
-Durations are measured from Kokoro `af_heart` narration, generated in chunks of whole sentences. The scene's length should follow its
+Durations are measured from Kokoro `af_heart` narration from `npm run narrate:scenes` (sentence by sentence, edge silence trimmed). The scene's length should follow its
 generated audio plus the padding below.
 
-Total runtime ≈ 8:10.
+Total runtime ≈ 7:42.
 
 | # | File | Part | Real-life anchor | Theory payload | Audio |
 |---|---|---|---|---|---|
-| 01 | [s01-cold-open](s01-cold-open.md) | 1 Poisson | Street with bus stop: phone, bus, raindrop | Random events on timelines | 11.3 s |
-| 02 | [s02-three-rules](s02-three-rules.md) | 1 Poisson | Commuter waiting, checking watch | Rate λ, independence (no memory), one at a time | 18.3 s |
-| 03 | [s03-why-everywhere](s03-why-everywhere.md) | 1 Poisson | Neighbourhood → people heading to the stop; train timetable | Many rare independent events → Poisson | 14.0 s |
-| 04 | [s04-one-formula](s04-one-formula.md) | 1 Poisson | "Will I wait over 6 minutes?" | P(none in t) = e^(−λt) → 37% | 14.2 s |
-| 05 | [s05-what-is-a-network](s05-what-is-a-network.md) | 2 Networks | Commuter texts "bus is late" | Devices, packets, bits as signals | 30.9 s |
-| 06 | [s06-collisions](s06-collisions.md) | 2 Networks | Two people on walkie-talkies | Shared channel, collision kills both | 25.0 s |
-| 07 | [s07-the-question](s07-the-question.md) | 2 Networks | Crowded stop, everyone on a phone | The problem statement | 9.5 s |
-| 08 | [s08-hawaii-1971](s08-hawaii-1971.md) | 3 Aloha | Hawaiian islands, 1971 radio terminals | Many terminals → one hub | 24.5 s |
-| 09 | [s09-the-rules](s09-the-rules.md) | 3 Aloha | Walkie-talkie "Copy that" | Send now, ACK, random retry | 28.2 s |
-| 10 | [s10-why-random](s10-why-random.md) | 3 Aloha | The hallway dance | Fixed delay = endless collisions | 19.8 s |
-| 11 | [s11-the-model](s11-the-model.md) | 4 Model | Phones at the bus stop | Frame time, attempts = Poisson | 32.0 s |
-| 12 | [s12-g-and-s](s12-g-and-s.md) | 4 Model | Tower scoreboard: tries vs delivered | G (offered load), S (throughput) | 28.0 s |
-| 13 | [s13-vulnerable-window](s13-vulnerable-window.md) | 5 Pure | 10-second walkie-talkie message | Vulnerable window = 2 frame times | 24.2 s |
-| 14 | [s14-pure-formula](s14-pure-formula.md) | 5 Pure | Bus stop timeline → packet timeline | S = G·e^(−2G) | 27.4 s |
-| 15 | [s15-the-curve](s15-the-curve.md) | 5 Pure | Highway from empty to jammed | Curve, peak 1/(2e) ≈ 18.4% | 29.5 s |
-| 16 | [s16-slotted-fix](s16-slotted-fix.md) | 6 Slotted | Meeting room booked by the hour | Slots, window shrinks to 1 | 24.4 s |
-| 17 | [s17-slotted-formula](s17-slotted-formula.md) | 6 Slotted | Bus stop "37%" callback | S = G·e^(−G), peak 1/e ≈ 36.8% | 27.4 s |
-| 18 | [s18-collapse-and-backoff](s18-collapse-and-backoff.md) | 7 Breaks | New Year's Eve midnight texts | Instability, exponential backoff | 31.7 s |
-| 19 | [s19-legacy](s19-legacy.md) | 8 Legacy | Commuter's phone → cell tower | Ethernet, Wi-Fi, cellular, RFID | 22.1 s |
-| 20 | [s20-recap](s20-recap.md) | 8 Legacy | Bus finally arrives | Recap card | 32.5 s |
+| 01 | [s01-cold-open](s01-cold-open.md) | 1 Poisson | Street with bus stop: phone, bus, raindrop | Random events on timelines | 10.3 s |
+| 02 | [s02-three-rules](s02-three-rules.md) | 1 Poisson | Commuter waiting, checking watch | Rate λ, independence (no memory), one at a time | 16.8 s |
+| 03 | [s03-why-everywhere](s03-why-everywhere.md) | 1 Poisson | Neighbourhood → people heading to the stop; train timetable | Many rare independent events → Poisson | 13.1 s |
+| 04 | [s04-one-formula](s04-one-formula.md) | 1 Poisson | "Will I wait over 6 minutes?" | P(none in t) = e^(−λt) → 37% | 13.6 s |
+| 05 | [s05-what-is-a-network](s05-what-is-a-network.md) | 2 Networks | Commuter texts "bus is late" | Devices, packets, bits as signals | 28.8 s |
+| 06 | [s06-collisions](s06-collisions.md) | 2 Networks | Two people on walkie-talkies | Shared channel, collision kills both | 24.4 s |
+| 07 | [s07-the-question](s07-the-question.md) | 2 Networks | Crowded stop, everyone on a phone | The problem statement | 8.8 s |
+| 08 | [s08-hawaii-1971](s08-hawaii-1971.md) | 3 Aloha | Hawaiian islands, 1971 radio terminals | Many terminals → one hub | 22.9 s |
+| 09 | [s09-the-rules](s09-the-rules.md) | 3 Aloha | Walkie-talkie "Copy that" | Send now, ACK, random retry | 27.1 s |
+| 10 | [s10-why-random](s10-why-random.md) | 3 Aloha | The hallway dance | Fixed delay = endless collisions | 19.5 s |
+| 11 | [s11-the-model](s11-the-model.md) | 4 Model | Phones at the bus stop | Frame time, attempts = Poisson | 30.3 s |
+| 12 | [s12-g-and-s](s12-g-and-s.md) | 4 Model | Tower scoreboard: tries vs delivered | G (offered load), S (throughput) | 25.7 s |
+| 13 | [s13-vulnerable-window](s13-vulnerable-window.md) | 5 Pure | 10-second walkie-talkie message | Vulnerable window = 2 frame times | 23.0 s |
+| 14 | [s14-pure-formula](s14-pure-formula.md) | 5 Pure | Bus stop timeline → packet timeline | S = G·e^(−2G) | 25.5 s |
+| 15 | [s15-the-curve](s15-the-curve.md) | 5 Pure | Highway from empty to jammed | Curve, peak 1/(2e) ≈ 18.4% | 28.0 s |
+| 16 | [s16-slotted-fix](s16-slotted-fix.md) | 6 Slotted | Meeting room booked by the hour | Slots, window shrinks to 1 | 23.3 s |
+| 17 | [s17-slotted-formula](s17-slotted-formula.md) | 6 Slotted | Bus stop "37%" callback | S = G·e^(−G), peak 1/e ≈ 36.8% | 25.5 s |
+| 18 | [s18-collapse-and-backoff](s18-collapse-and-backoff.md) | 7 Breaks | New Year's Eve midnight texts | Instability, exponential backoff | 29.7 s |
+| 19 | [s19-legacy](s19-legacy.md) | 8 Legacy | Commuter's phone → cell tower | Ethernet, Wi-Fi, cellular, RFID | 19.7 s |
+| 20 | [s20-recap](s20-recap.md) | 8 Legacy | Bus finally arrives | Recap card | 30.5 s |
 
 ## Technical conventions
 
-- **Canvas:** 1280 × 720, 30 fps (matches `src/Root.tsx`). One Remotion composition per scene.
-  Suggested id: `S01ColdOpen`, `S02ThreeRules`, … (PascalCase of the file name).
-- **Scene length:** narration audio + **0.3 s lead-in** + **0.5 s tail**. Don't cut the audio to fit the visuals;
-  stretch the visuals instead. Kokoro already leaves a little silence at each end.
-- **Narration text:** the lines starting with `> ` under `## Narration`. They're written to be spoken exactly as is.
-- **TTS rules (Kokoro `af_heart`):**
-  1. Replace `Poisson` → `Pouasson` before generating, or it says "poison". Keep "Poisson" on screen.
-  2. **Split into chunks of whole sentences, at most ~250 characters each, then concatenate.** Kokoro silently
-     truncates long inputs: a full scene in one `generate()` call loses its ending. One call per *single* sentence
-     works but adds pauses around short sentences.
+- **Canvas:** 1280 × 720, 30 fps. Every scene is already a registered composition (`S01ColdOpen` … `S20Recap`),
+  and `FullVideo` plays them all in order.
+- **Where to build:** edit only your own `src/scenes/SNN<Name>.tsx` and use the shared kit. Read
+  [`src/shared/README.md`](../src/shared/README.md) and open `KitPreview` in Studio (`npm run studio`).
+- **Scene length:** narration audio + **0.3 s lead-in** + **0.5 s tail**, computed automatically. Need more
+  picture? Set `meta.extraTail` in your scene file. Don't cut the audio to fit the visuals; stretch the visuals instead.
+- **Narration audio is already generated:** `public/narration/sNN.mp3`, played by `<SceneFrame>`. Sentence timings
+  are in `src/scenes/narration.ts`.
+- **Cues:** key visuals to beat-sheet phrases with `cue("sNN", "phrase")`, which returns the scene frame where it's spoken.
+- **Narration text:** the lines starting with `> ` under `## Narration`. If you change them, run
+  `npm run narrate:scenes -- sNN`.
+- **TTS rules (Kokoro `af_heart`), already handled by `scripts/narrate-scenes.mjs`:**
+  1. `Poisson` is sent to Kokoro as `Pouasson`, or it says "poison". Keep "Poisson" on screen.
+  2. Narration is generated one sentence per call, then joined with fixed pauses. Kokoro silently truncates long inputs.
   3. Don't put symbols in narration. Formulas are spelled out ("e to the minus two G"), and so are years and percentages.
-- **Suggested audio path:** `build/narration/sNN.wav`.
-- **Cues:** the beat sheets key visuals to *phrases* in the narration. Align them to the real audio, for example
-  by looking at sentence boundaries in the generated file.
 
 ## Style guide
 

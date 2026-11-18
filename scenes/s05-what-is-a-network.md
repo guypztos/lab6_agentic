@@ -1,6 +1,6 @@
 # Scene 05 — What a network is
 
-**Part 2 · Networks from zero** · **Audio:** 30.9 s · **Starts at:** 1:00 · **Composition:** `S05WhatIsANetwork` · **Audio file:** `build/narration/s05.wav`
+**Part 2 · Networks from zero** · **Audio:** 28.8 s · **Starts at:** 0:57 · **Composition:** `S05WhatIsANetwork` · **Audio file:** `build/narration/s05.wav`
 
 ## Narration
 

@@ -1,6 +1,6 @@
 # Scene 10 — Why the wait must be random
 
-**Part 3 · Aloha: the idea** · **Audio:** 19.8 s · **Starts at:** 3:03 · **Composition:** `S10WhyRandom` · **Audio file:** `build/narration/s10.wav`
+**Part 3 · Aloha: the idea** · **Audio:** 19.5 s · **Starts at:** 2:53 · **Composition:** `S10WhyRandom` · **Audio file:** `build/narration/s10.wav`
 
 ## Narration
 

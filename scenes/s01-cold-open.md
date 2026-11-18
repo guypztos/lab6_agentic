@@ -1,6 +1,6 @@
 # Scene 01 — Cold open
 
-**Part 1 · The Poisson process** · **Audio:** 11.3 s · **Starts at:** 0:00 · **Composition:** `S01ColdOpen` · **Audio file:** `build/narration/s01.wav`
+**Part 1 · The Poisson process** · **Audio:** 10.3 s · **Starts at:** 0:00 · **Composition:** `S01ColdOpen` · **Audio file:** `build/narration/s01.wav`
 
 ## Narration
 

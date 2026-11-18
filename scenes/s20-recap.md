@@ -1,6 +1,6 @@
 # Scene 20 — Recap
 
-**Part 8 · Aloha today** · **Audio:** 32.5 s · **Starts at:** 7:37 · **Composition:** `S20Recap` · **Audio file:** `build/narration/s20.wav`
+**Part 8 · Aloha today** · **Audio:** 30.5 s · **Starts at:** 7:11 · **Composition:** `S20Recap` · **Audio file:** `build/narration/s20.wav`
 
 ## Narration
 

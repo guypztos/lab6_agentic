@@ -1,6 +1,6 @@
 # Scene 19 — Aloha is everywhere
 
-**Part 8 · Aloha today** · **Audio:** 22.1 s · **Starts at:** 7:14 · **Composition:** `S19Legacy` · **Audio file:** `build/narration/s19.wav`
+**Part 8 · Aloha today** · **Audio:** 19.7 s · **Starts at:** 6:50 · **Composition:** `S19Legacy` · **Audio file:** `build/narration/s19.wav`
 
 ## Narration
 

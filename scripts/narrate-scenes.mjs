@@ -1,0 +1,133 @@
+// Per-scene narration with sentence timings.
+//
+//   npm run narrate:scenes            # all scenes
+//   npm run narrate:scenes -- s05 s12 # only these (others keep their existing timings)
+//
+// Reads the narration (`> ` lines under "## Narration") from scenes/sNN-*.md, generates it with Kokoro
+// one sentence at a time (Kokoro truncates long inputs), trims each sentence's edge silence, joins with
+// fixed pauses, and writes:
+//   public/narration/sNN.mp3      audio (used by <SceneFrame>)
+//   public/narration/cues.json    sentence start/end times (seconds from the start of the narration)
+//   src/scenes/narration.ts       the same data as a TS module (used by cue() and the scene registry)
+import { execFileSync } from "node:child_process";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { KokoroTTS } from "kokoro-js";
+
+const VOICE = "af_heart";
+const SR_FALLBACK = 24000;
+const GAP = { ".": 0.32, "!": 0.32, "?": 0.4 }; // pause after a sentence, by its final punctuation
+const TTS_SUBS = [["Poisson", "Pouasson"]]; // pronunciation fixes (see scenes/README.md)
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const SCENES_DIR = path.join(ROOT, "scenes");
+const OUT_DIR = path.join(ROOT, "public", "narration");
+const CUES = path.join(OUT_DIR, "cues.json");
+const TS_OUT = path.join(ROOT, "src", "scenes", "narration.ts");
+
+const only = new Set(process.argv.slice(2));
+mkdirSync(OUT_DIR, { recursive: true });
+
+const files = readdirSync(SCENES_DIR).filter((f) => /^s\d\d-.*\.md$/.test(f)).sort();
+const scenes = files.map((file) => {
+  const md = readFileSync(path.join(SCENES_DIR, file), "utf8");
+  const title = md.split("\n")[0].replace(/^#\s*/, "").replace(/^Scene \d+ — /, "");
+  const text = md
+    .split("## Narration")[1]
+    .split("\n## ")[0]
+    .split("\n")
+    .filter((l) => l.startsWith("> "))
+    .map((l) => l.slice(2))
+    .join(" ")
+    .trim();
+  return { id: file.slice(0, 3), file, title, text };
+});
+
+const sentencesOf = (text) => text.match(/[^.?!]+[.?!]+["”]?/g).map((s) => s.trim());
+
+// Trim leading/trailing near-silence, keeping a small natural margin.
+function trim(x, sr) {
+  const th = 0.012;
+  let a = 0;
+  let b = x.length - 1;
+  while (a < x.length && Math.abs(x[a]) < th) a++;
+  while (b > a && Math.abs(x[b]) < th) b--;
+  a = Math.max(0, a - Math.round(0.03 * sr));
+  b = Math.min(x.length - 1, b + Math.round(0.08 * sr));
+  return x.subarray(a, b + 1);
+}
+
+function wav(x, sr) {
+  const b = Buffer.alloc(44 + x.length * 2);
+  b.write("RIFF", 0);
+  b.writeUInt32LE(36 + x.length * 2, 4);
+  b.write("WAVEfmt ", 8);
+  b.writeUInt32LE(16, 16);
+  b.writeUInt16LE(1, 20);
+  b.writeUInt16LE(1, 22);
+  b.writeUInt32LE(sr, 24);
+  b.writeUInt32LE(sr * 2, 28);
+  b.writeUInt16LE(2, 32);
+  b.writeUInt16LE(16, 34);
+  b.write("data", 36);
+  b.writeUInt32LE(x.length * 2, 40);
+  for (let i = 0; i < x.length; i++) b.writeInt16LE(Math.max(-32768, Math.min(32767, Math.round(x[i] * 32767))), 44 + i * 2);
+  return b;
+}
+
+const cues = existsSync(CUES) ? JSON.parse(readFileSync(CUES, "utf8")) : {};
+const tts = await KokoroTTS.from_pretrained("onnx-community/Kokoro-82M-v1.0-ONNX", { dtype: "q8", device: "cpu" });
+
+for (const s of scenes) {
+  if (only.size && !only.has(s.id)) continue;
+  const parts = [];
+  const sentences = [];
+  let sr = SR_FALLBACK;
+  let t = 0;
+  const list = sentencesOf(s.text);
+  for (let i = 0; i < list.length; i++) {
+    let spoken = list[i];
+    for (const [a, b] of TTS_SUBS) spoken = spoken.replaceAll(a, b);
+    const audio = await tts.generate(spoken, { voice: VOICE });
+    sr = audio.sampling_rate;
+    const clip = trim(audio.audio, sr);
+    const dur = clip.length / sr;
+    sentences.push({ text: list[i], start: +t.toFixed(3), end: +(t + dur).toFixed(3) });
+    parts.push(clip);
+    t += dur;
+    if (i < list.length - 1) {
+      const gap = GAP[list[i].replace(/["”]$/, "").slice(-1)] ?? 0.32;
+      parts.push(new Float32Array(Math.round(gap * sr)));
+      t += gap;
+    }
+  }
+  const all = new Float32Array(parts.reduce((n, p) => n + p.length, 0));
+  let o = 0;
+  for (const p of parts) {
+    all.set(p, o);
+    o += p.length;
+  }
+  const tmp = path.join(OUT_DIR, `${s.id}.tmp.wav`);
+  writeFileSync(tmp, wav(all, sr));
+  execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", tmp, "-codec:a", "libmp3lame", "-b:a", "96k", path.join(OUT_DIR, `${s.id}.mp3`)]);
+  rmSync(tmp);
+  cues[s.id] = { duration: +(all.length / sr).toFixed(3), sentences };
+  console.log(`${s.id}  ${cues[s.id].duration.toFixed(1)}s  ${sentences.length} sentences  ${s.title}`);
+}
+
+writeFileSync(CUES, JSON.stringify(cues, null, 1) + "\n");
+
+const data = Object.fromEntries(
+  scenes.map((s) => [s.id, { title: s.title, file: s.file, text: s.text, ...(cues[s.id] ?? { duration: 0, sentences: [] }) }]),
+);
+writeFileSync(
+  TS_OUT,
+  `// GENERATED by scripts/narrate-scenes.mjs — do not edit by hand. Re-run \`npm run narrate:scenes\`.\n` +
+    `// Times are seconds from the start of each scene's narration (add LEAD_IN for scene time).\n\n` +
+    `export type Sentence = { text: string; start: number; end: number };\n` +
+    `export type SceneNarration = { title: string; file: string; text: string; duration: number; sentences: Sentence[] };\n\n` +
+    `export const NARRATION = ${JSON.stringify(data, null, 1)} as const satisfies Record<string, SceneNarration>;\n\n` +
+    `export type SceneId = keyof typeof NARRATION;\n`,
+);
+console.log(`wrote ${path.relative(ROOT, CUES)} and ${path.relative(ROOT, TS_OUT)}`);

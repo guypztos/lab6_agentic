@@ -1,0 +1,26 @@
+{
+  "name": "lab6-video-stack",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "narrate": "node scripts/narrate.mjs",
+    "video": "node scripts/ensure-browser.mjs && remotion render src/index.ts Clip build/silent.mp4",
+    "mux": "mkdir -p out && ffmpeg -y -loglevel error -i build/silent.mp4 -i build/narration.wav -filter_complex \"[1:a]adelay=500:all=1,apad[a]\" -map 0:v -map \"[a]\" -c:v copy -c:a aac -b:a 192k -t 5 out/clip.mp4 && rm build/silent.mp4",
+    "build": "npm run narrate && npm run video && npm run mux",
+    "studio": "remotion studio src/index.ts",
+    "narrate:scenes": "node scripts/narrate-scenes.mjs",
+    "kit:still": "node scripts/ensure-browser.mjs && remotion still src/index.ts KitPreview"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.544",
+    "@remotion/renderer": "4.0.544",
+    "kokoro-js": "^1.2.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remotion": "4.0.544"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}

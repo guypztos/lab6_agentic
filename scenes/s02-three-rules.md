@@ -1,6 +1,6 @@
 # Scene 02 — The three rules
 
-**Part 1 · The Poisson process** · **Audio:** 18.3 s · **Starts at:** 0:12 · **Composition:** `S02ThreeRules` · **Audio file:** `build/narration/s02.wav`
+**Part 1 · The Poisson process** · **Audio:** 16.8 s · **Starts at:** 0:11 · **Composition:** `S02ThreeRules` · **Audio file:** `build/narration/s02.wav`
 
 ## Narration
 

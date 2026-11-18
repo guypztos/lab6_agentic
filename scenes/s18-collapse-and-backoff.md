@@ -1,6 +1,6 @@
 # Scene 18 — The collapse spiral, and backing off
 
-**Part 7 · When it breaks** · **Audio:** 31.7 s · **Starts at:** 6:42 · **Composition:** `S18CollapseAndBackoff` · **Audio file:** `build/narration/s18.wav`
+**Part 7 · When it breaks** · **Audio:** 29.7 s · **Starts at:** 6:20 · **Composition:** `S18CollapseAndBackoff` · **Audio file:** `build/narration/s18.wav`
 
 ## Narration
 

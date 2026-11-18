@@ -1,6 +1,6 @@
 # Scene 16 — The fix: add a clock
 
-**Part 6 · Slotted Aloha** · **Audio:** 24.4 s · **Starts at:** 5:48 · **Composition:** `S16SlottedFix` · **Audio file:** `build/narration/s16.wav`
+**Part 6 · Slotted Aloha** · **Audio:** 23.3 s · **Starts at:** 5:29 · **Composition:** `S16SlottedFix` · **Audio file:** `build/narration/s16.wav`
 
 ## Narration
 
